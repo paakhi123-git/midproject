@@ -1,11 +1,17 @@
+#code update
 version: "3"
 services: 
   springBootApp: 
     image: paakhi/proj-img:1.0
-
     container_name: docker-postgres-springboot-app
     environment: 
-      -   POSTGRES_HOST=docker-postgres-springboot-demo
+      - POSTGRES_HOST=docker-postgres-springboot-demo
+      - SERVER_PORT=8087
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresDb:5432/dbexample1
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=Krpy@10271611
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.PostgreSQLDialect
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create
     ports:
       - "9000:8087"
     networks:
@@ -15,10 +21,10 @@ services:
     restart: on-failure
 
   postgresDb:
-    image: postgres:13.2
+    image: postgres:15.0
     container_name: docker-postgres-springboot-demo-db
     ports: 
-      - "5434:5432"
+      - "5432:5432"
     networks: 
      - network
     volumes:
@@ -26,7 +32,7 @@ services:
     environment:
       -   POSTGRES_USER=postgres
       -   POSTGRES_PASSWORD=Krpy@10271611
-      -   POSTGRESDB=postgres
+      -   POSTGRESDB=dbexample1
 networks:
   network:
 volumes:
